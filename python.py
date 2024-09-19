@@ -126,6 +126,28 @@ for employee in all_employees:
 
 conn.close()
 
+# Připojení k databázi
+conn = sqlite3.connect('employees.db')
+cursor = conn.cursor()
+
+# Aktualizace pozice Anny Novotné
+cursor.execute('''
+    UPDATE employees
+    SET position = "Projektový manažer"
+    WHERE name = "Anna Novotná"
+''')
+
+conn.commit()
+
+# Výpis záznamu Anny Novotné po aktualizaci
+cursor.execute('SELECT * FROM employees WHERE name = "Anna Novotná"')
+anna_record = cursor.fetchone()
+print(anna_record)
+
+# Zavření připojení
+conn.close()
+
+
 
 
 
