@@ -17,6 +17,7 @@ cursor.execute('''
 ''')
 
 conn.commit()
+
 conn.close()
 
 
@@ -47,5 +48,85 @@ cursor.executemany('''
 conn.commit()
 
 conn.close()
+
+# Připojení k databázi
+conn = sqlite3.connect('employees.db')
+cursor = conn.cursor()
+
+# Výběr zaměstnanců z Prahy
+cursor.execute('SELECT * FROM employees WHERE city = "Praha"')
+prague_employees = cursor.fetchall()
+
+# Výpis zaměstnanců
+for employee in prague_employees:
+    print(employee)
+
+# Zavření připojení
+conn.close()
+
+# Připojení k databázi
+conn = sqlite3.connect('employees.db')
+cursor = conn.cursor()
+
+requested_city = "Praha"  
+
+# Výběr zaměstnanců z Prahy mladších než 40 let
+cursor.execute('SELECT * FROM employees WHERE city = ? AND age < 40', (requested_city,))
+young_employees = cursor.fetchall()
+
+# Výpis zaměstnanců
+for employee in young_employees:
+    print(employee)
+
+conn.close()
+
+# Připojení k databázi
+conn = sqlite3.connect('employees.db')
+cursor = conn.cursor()
+
+# Výběr zaměstnanců z Prahy s platem vyšším než 50 000 CZK
+cursor.execute('SELECT * FROM employees WHERE city = "Praha" AND salary > 50000')
+high_salary_employees = cursor.fetchall()
+
+# Výpis zaměstnanců
+for employee in high_salary_employees:
+    print(employee)
+
+conn.close()
+
+# Připojení k databázi
+conn = sqlite3.connect('employees.db')
+cursor = conn.cursor()
+
+# Výběr zaměstnanců z Brna nebo Ostravy starších než 35 a mladších než 45
+cursor.execute('''
+    SELECT * FROM employees
+    WHERE (city = "Brno" OR city = "Ostrava") AND age > 35 AND age < 45
+''')
+specific_age_employees = cursor.fetchall()
+
+# Výpis zaměstnanců
+for employee in specific_age_employees:
+    print(employee)
+
+
+conn.close()
+
+# Připojení k databázi
+conn = sqlite3.connect('employees.db')
+cursor = conn.cursor()
+
+# Výběr všech zaměstnanců a zobrazení pouze jména, pozice a platu
+cursor.execute('SELECT name, position, salary FROM employees')
+all_employees = cursor.fetchall()
+
+# Výpis zaměstnanců
+for employee in all_employees:
+    print(employee)
+
+conn.close()
+
+
+
 
 
